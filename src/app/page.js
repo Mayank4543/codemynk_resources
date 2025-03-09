@@ -1,5 +1,11 @@
-
+import AboutUs from "./components/About";
+import Hero from "./components/Hero";
 
 export default function Home() {
-  return <h1>hello</h1>;
+  return (
+    <main>
+      <Hero />
+      <AboutUs/>
+    </main>
+  );
 }
