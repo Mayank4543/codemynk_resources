@@ -1,4 +1,4 @@
-import AboutUs from "./About";
+import AboutUs from "../components/About";
 
 export default function Hero() {
   return (
