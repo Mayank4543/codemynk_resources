@@ -1,7 +1,12 @@
 "use client";
 import { useState } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react"; 
-import { Player } from "@lottiefiles/react-lottie-player";
+import { ChevronDown, ChevronUp } from "lucide-react";
+import dynamic from "next/dynamic";
+
+// Fix: Dynamically import Lottie Player
+const Player = dynamic(() => import("@lottiefiles/react-lottie-player"), {
+  ssr: false,
+});
 
 export default function AboutUs() {
   const [openIndex, setOpenIndex] = useState(0);
@@ -64,15 +69,8 @@ export default function AboutUs() {
           </div>
         </div>
 
-        {/* Right Section: Image */}
-        <div>
-          <Player
-            autoplay
-            loop
-            src="https://lottie.host/7401522f-2d8b-4049-ad18-eb0edb6af224/CE9lFrNlEH.json"
-            className="w-full max-w-md"
-          />
-        </div>
+        {/* Right Section: Lottie Animation */}
+        
       </div>
     </section>
   );

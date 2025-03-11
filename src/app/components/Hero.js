@@ -1,4 +1,6 @@
-import AboutUs from "../components/About";
+"use client";
+import dynamic from "next/dynamic";
+const AboutUs = dynamic(() => import("../components/About"), { ssr: false });
 
 export default function Hero() {
   return (
