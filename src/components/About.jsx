@@ -1,15 +1,15 @@
-"use client";
-import { useState } from "react";
+import React, { useState, lazy, Suspense } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import dynamic from "next/dynamic";
+import Lottie from "lottie-react";
+import animationData from "../assets/Animation - 1741724947704.json"; // Update the path accordingly
 
-// Fix: Dynamically import Lottie Player
-const Player = dynamic(() => import("@lottiefiles/react-lottie-player"), {
-  ssr: false,
-});
+// Lazy load the Lottie animation component
+const LottieAnimation = () => (
+  <Lottie animationData={animationData} loop={true} />
+);
 
 export default function AboutUs() {
-  const [openIndex, setOpenIndex] = useState(0);
+  const [openIndex, setOpenIndex] = useState(null);
 
   const toggleAccordion = (index) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -24,7 +24,7 @@ export default function AboutUs() {
     {
       title: "What do we do?",
       content:
-        "We create modern web applications, UI frameworks, and data-driven solutions that help businesses and communities grow",
+        "We create modern web applications, UI frameworks, and data-driven solutions that help businesses and communities grow.",
     },
     {
       title: "What do we care?",
@@ -70,7 +70,11 @@ export default function AboutUs() {
         </div>
 
         {/* Right Section: Lottie Animation */}
-        
+        <div>
+          <Suspense fallback={<div>Loading animation...</div>}>
+            <LottieAnimation />
+          </Suspense>
+        </div>
       </div>
     </section>
   );

@@ -1,7 +1,7 @@
-"use client"; // Required for event handling in Next.js App Router
+import React from "react";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
-import Link from "next/link";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,13 +14,13 @@ export default function Navbar() {
         {/* Desktop Menu */}
         <ul className="hidden md:flex gap-6">
           <li className="cursor-pointer hover:text-purple-400">
-            <Link href="/">Home</Link>
+            <Link to="/">Home</Link>
           </li>
           <li className="cursor-pointer hover:text-purple-400">
-            <Link href="/notes">Notes</Link>
+            <Link to="/notes">Notes</Link>
           </li>
           <li className="cursor-pointer hover:text-purple-400">
-            <Link href="/question">Questions</Link>
+            <Link to="/question">Questions</Link>
           </li>
         </ul>
 
@@ -40,17 +40,17 @@ export default function Navbar() {
         }`}
       >
         <li className="cursor-pointer hover:text-purple-400">
-          <Link href="/" onClick={() => setIsOpen(false)}>
+          <Link to="/" onClick={() => setIsOpen(false)}>
             Home
           </Link>
         </li>
         <li className="cursor-pointer hover:text-purple-400">
-          <Link href="/notes" onClick={() => setIsOpen(false)}>
+          <Link to="/notes" onClick={() => setIsOpen(false)}>
             Notes
           </Link>
         </li>
         <li className="cursor-pointer hover:text-purple-400">
-          <Link href="/question" onClick={() => setIsOpen(false)}>
+          <Link to="/question" onClick={() => setIsOpen(false)}>
             Questions
           </Link>
         </li>

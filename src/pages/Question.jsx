@@ -1,8 +1,8 @@
-"use client";
+import React from "react";
 import { motion } from "framer-motion";
+import { SiJavascript } from "react-icons/si";
 import {
   FaUserTie,
-  FaFilePdf,
   FaDatabase,
   FaCode,
   FaLinux,
@@ -15,36 +15,35 @@ import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 
 const jobs = [
- 
   {
-    position: "SQL",
-    icon: <FaDatabase size={24} />, // Replace with an actual path
-    description: "Learn essential SQL queries and database concepts.",
-    pdfPath: "/doc/sql.pdf",
+    position: "Javascript",
+    icon: <SiJavascript size={24} />,
+    description: "Mastering Javascript with important Question ",
+    pdfPath: "/doc/js_question.pdf",
   },
   {
     position: "DSA",
-    icon: <FaCode size={24} />, // Replace with an actual path
+    icon: <FaCode size={24} />,
     description: "Master Data Structures and Algorithms with top resources.",
     pdfPath: "/docs/dsa.pdf",
   },
   {
     position: "Linux",
-    icon: <FaLinux size={24} />, // Replace with an actual path
+    icon: <FaLinux size={24} />,
     description: "Get started with Linux commands and system administration.",
     pdfPath: "/doc/Linux.pdf",
   },
   {
     position: "HR",
-    icon: <FaUserTie size={24} />, // Replace with an actual path
+    icon: <FaUserTie size={24} />,
     description: "Get started with HR Imp Question",
     pdfPath: "/doc/HR_Question.pdf",
   },
 ];
 
-export default function Ouestionpage() {
+function Ouestion() {
   return (
-    <section className="bg-[#1a0b2e] text-white py-12 px-6">
+    <section className="bg-[#1a0b2e] h-screen text-white py-12 px-6">
       <div className="max-w-7xl mx-auto text-center">
         <h2 className="text-3xl font-bold">
           Best Job <span className="text-purple-400">Opportunities</span>
@@ -81,24 +80,22 @@ export default function Ouestionpage() {
                 </div>
                 <h4 className="text-lg font-semibold">{job.position}</h4>
                 <p className="text-gray-400 text-sm">{job.description}</p>
-                <p className="text-gray-300 text-sm">{job.type}</p>
                 <div className="mt-4 flex justify-between text-purple-400">
                   <a
                     href={job.pdfPath}
                     target="_blank"
+                    rel="noopener noreferrer"
                     className="flex items-center gap-1"
                   >
                     <FaEye /> View
                   </a>
-                  {!job.viewOnly && (
-                    <a
-                      href={job.pdfPath}
-                      download
-                      className="flex items-center gap-1"
-                    >
-                      <FaDownload /> Download
-                    </a>
-                  )}
+                  <a
+                    href={job.pdfPath}
+                    download
+                    className="flex items-center gap-1"
+                  >
+                    <FaDownload /> Download
+                  </a>
                 </div>
               </motion.div>
             </SwiperSlide>
@@ -108,3 +105,5 @@ export default function Ouestionpage() {
     </section>
   );
 }
+
+export default Ouestion;

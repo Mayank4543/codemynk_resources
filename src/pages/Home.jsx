@@ -1,8 +1,16 @@
-"use client";
-import dynamic from "next/dynamic";
-const AboutUs = dynamic(() => import("../components/About"), { ssr: false });
+import React, { useState, lazy, Suspense } from "react";
 
-export default function Hero() {
+
+const AboutUs = lazy(() => import("../components/About"));
+
+export default function Home() {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearch = () => {
+    // Implement your search functionality here
+    console.log("Searching for:", searchTerm);
+  };
+
   return (
     <>
       <section className="text-center text-white py-20 bg-gradient-to-r from-[#1a0b2e] to-[#3b1c58]">
@@ -19,13 +27,22 @@ export default function Hero() {
             type="text"
             placeholder="Search Notes..."
             className="p-3 w-1/2 rounded-md bg-[#3b1c58] text-white"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <button className="bg-purple-500 px-6 py-3 rounded-md">Search</button>
+          <button
+            className="bg-purple-500 px-6 py-3 rounded-md"
+            onClick={handleSearch}
+          >
+            Search
+          </button>
         </div>
       </section>
 
-      {/* Add AboutUs section below Hero */}
-      <AboutUs />
+      {/* AboutUs section */}
+      <Suspense fallback={<div>Loading...</div>}>
+        <AboutUs />
+      </Suspense>
     </>
   );
 }
