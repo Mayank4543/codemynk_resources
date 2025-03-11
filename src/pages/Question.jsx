@@ -25,13 +25,13 @@ const jobs = [
     position: "DSA",
     icon: <FaCode size={24} />,
     description: "Master Data Structures and Algorithms with top resources.",
-    pdfPath: "/docs/dsa.pdf",
+    pdfPath: "",
   },
   {
     position: "Linux",
     icon: <FaLinux size={24} />,
     description: "Get started with Linux commands and system administration.",
-    pdfPath: "/doc/Linux.pdf",
+    pdfPath: "",
   },
   {
     position: "HR",
@@ -81,21 +81,27 @@ function Ouestion() {
                 <h4 className="text-lg font-semibold">{job.position}</h4>
                 <p className="text-gray-400 text-sm">{job.description}</p>
                 <div className="mt-4 flex justify-between text-purple-400">
-                  <a
-                    href={job.pdfPath}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1"
-                  >
-                    <FaEye /> View
-                  </a>
-                  <a
-                    href={job.pdfPath}
-                    download
-                    className="flex items-center gap-1"
-                  >
-                    <FaDownload /> Download
-                  </a>
+                  {job.pdfPath ? (
+                    <>
+                      <a
+                        href={job.pdfPath}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1"
+                      >
+                        <FaEye /> View
+                      </a>
+                      <a
+                        href={job.pdfPath}
+                        download
+                        className="flex items-center gap-1"
+                      >
+                        <FaDownload /> Download
+                      </a>
+                    </>
+                  ) : (
+                    <p className="text-gray-400 text-sm">Uploaded Soon</p>
+                  )}
                 </div>
               </motion.div>
             </SwiperSlide>
