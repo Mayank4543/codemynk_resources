@@ -22,4 +22,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-MayankRathore_wetyugvbrgdb1.pdf
+/doc/MayankRathore_wetyugvbrgdb1.pdf
+public\doc\MayankRathore_wetyugvbrgdb1.pdf
