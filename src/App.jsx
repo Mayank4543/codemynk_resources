@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Notes from "./pages/Notes";
 import Question from "./pages/Question";
+
 function App() {
   return (
     <Router>
