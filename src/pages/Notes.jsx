@@ -19,7 +19,7 @@ const jobs = [
     icon: <FaFilePdf size={24} />,
     viewOnly: true,
     description: "View your ATS-friendly resume and analyze its score.",
-    pdfPath: "/doc/MayankRathore_wetyugvbrgdb1.pdf",
+    pdfPath: "/doc/MayankRathore_Resume123.pdf",
   },
   {
     position: "SQL",
