@@ -9,9 +9,7 @@ export default function Navbar() {
   return (
     <nav className="bg-[#1a0b2e] text-white px-6 py-4 md:px-10">
       <div className="flex justify-between items-center">
-        <h1 className="text-xl font-bold">Codemynk Resources</h1>
-
-        {/* Desktop Menu */}
+        <h1 className="text-xl font-bold">Codemynk Resources</h1>        {/* Desktop Menu */}
         <ul className="hidden md:flex gap-6">
           <li className="cursor-pointer hover:text-purple-400">
             <Link to="/">Home</Link>
@@ -21,6 +19,9 @@ export default function Navbar() {
           </li>
           <li className="cursor-pointer hover:text-purple-400">
             <Link to="/question">Questions</Link>
+          </li>
+          <li className="cursor-pointer hover:text-purple-400">
+            <Link to="/editor">Notes Editor</Link>
           </li>
         </ul>
 
@@ -48,10 +49,14 @@ export default function Navbar() {
           <Link to="/notes" onClick={() => setIsOpen(false)}>
             Notes
           </Link>
-        </li>
-        <li className="cursor-pointer hover:text-purple-400">
+        </li>        <li className="cursor-pointer hover:text-purple-400">
           <Link to="/question" onClick={() => setIsOpen(false)}>
             Questions
+          </Link>
+        </li>
+        <li className="cursor-pointer hover:text-purple-400">
+          <Link to="/editor" onClick={() => setIsOpen(false)}>
+            Notes Editor
           </Link>
         </li>
       </ul>

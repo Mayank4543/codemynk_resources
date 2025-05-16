@@ -10,9 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource/caveat": "^5.2.5",
+    "@fontsource/dancing-script": "^5.2.5",
+    "@fontsource/homemade-apple": "^5.2.5",
+    "@fontsource/pacifico": "^5.2.5",
+    "@fontsource/sacramento": "^5.2.5",
     "@lottiefiles/react-lottie-player": "^3.6.0",
     "@tailwindcss/vite": "^4.0.13",
+    "axios": "^1.9.0",
     "framer-motion": "^12.5.0",
+    "html2pdf.js": "^0.10.3",
     "lottie-react": "^2.4.1",
     "lucide-react": "^0.479.0",
     "react": "^19.0.0",

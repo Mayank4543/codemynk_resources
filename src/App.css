@@ -1,0 +1,260 @@
+/* Add at the end of the file */
+
+/* Rich Text Formatting */
+.tooltip-container {
+  position: relative;
+}
+
+.tooltip {
+  display: none;
+  position: absolute;
+  background-color: #2c1a4e;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  z-index: 10;
+  margin-bottom: 0.25rem;
+}
+
+.tooltip-container:hover .tooltip {
+  display: block;
+}
+
+/* Text formatting styles */
+.handwriting-text {
+  font-family: var(--font-family, 'Dancing Script'), cursive;
+}
+
+.handwriting-text[data-format-bold="true"] {
+  font-weight: bold;
+}
+
+.handwriting-text[data-format-italic="true"] {
+  font-style: italic;
+}
+
+.handwriting-text[data-format-underline="true"] {
+  text-decoration: underline;
+}
+
+.handwriting-text[data-format-strikethrough="true"] {
+  text-decoration: line-through;
+}
+
+/* Rich text rendering */
+.rich-text-editor {
+  position: relative;
+}
+
+/* Format toolbar */
+.format-toolbar-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background-color: #f8f9fa;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.format-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.25rem;
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.format-button:hover {
+  background-color: #e9ecef;
+}
+
+.format-button.active {
+  background-color: #ced4da;
+}
+
+.format-separator {
+  height: 1.5rem;
+  width: 1px;
+  background-color: #ced4da;
+  margin: 0 0.5rem;
+}
+
+/* Additional text formatting */
+.highlight {
+  background-color: #fff3cd;
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+}
+
+[data-line-spacing="1"] {
+  line-height: 1;
+}
+
+[data-line-spacing="1.5"] {
+  line-height: 1.5;
+}
+
+[data-line-spacing="2"] {
+  line-height: 2;
+}
+
+[data-line-spacing="2.5"] {
+  line-height: 2.5;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .format-toolbar-container {
+    overflow-x: auto;
+    justify-content: flex-start;
+  }
+  
+  .format-separator {
+    display: none;
+  }
+}
+
+/* Rich text preview styles */
+.preview-container {
+  background-color: white;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  min-height: 500px;
+  font-family: var(--font-family, 'Dancing Script'), cursive;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.formatted-text-preview {
+  font-family: inherit;
+}
+
+.formatted-text-preview strong {
+  font-weight: bold;
+}
+
+.formatted-text-preview em {
+  font-style: italic;
+}
+
+.formatted-text-preview u {
+  text-decoration: underline;
+}
+
+.formatted-text-preview s {
+  text-decoration: line-through;
+}
+
+.formatted-text-preview ul {
+  padding-left: 1.5rem;
+  list-style-type: disc;
+}
+
+.formatted-text-preview ol {
+  padding-left: 1.5rem;
+  list-style-type: decimal;
+}
+
+.formatted-text-preview li {
+  margin-bottom: 0.25rem;
+}
+
+/* Color picker dropdown */
+.color-picker-dropdown {
+  position: absolute;
+  display: none;
+  background-color: #2c1a4e;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  z-index: 10;
+  top: 100%;
+  left: 0;
+  width: 160px;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.color-option {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.color-option:hover {
+  transform: scale(1.2);
+}
+
+/* Show dropdown on hover */
+.color-picker:hover .color-picker-dropdown {
+  display: flex;
+}
+
+/* Advanced formatting styles */
+.code-block {
+  background-color: #f1f1f1;
+  border-radius: 0.25rem;
+  padding: 1rem;
+  font-family: monospace;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+blockquote {
+  border-left: 3px solid #8b5cf6;
+  padding-left: 1rem;
+  margin: 1rem 0;
+  font-style: italic;
+  color: #4b5563;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 1rem 0;
+  width: 100%;
+}
+
+table td, table th {
+  border: 1px solid #e5e7eb;
+  padding: 0.5rem;
+}
+
+table th {
+  background-color: #f3f4f6;
+}
+
+/* Make the rich text editor responsive */
+@media (max-width: 768px) {
+  .rich-text-editor .flex {
+    flex-wrap: wrap;
+  }
+  
+  .rich-text-editor button {
+    font-size: 0.875rem;
+  }
+}
+
+/* Tablet and mobile responsiveness */
+@media (max-width: 1024px) {
+  .formatted-text-preview {
+    font-size: 0.95rem;
+  }
+  
+  .rich-text-editor select {
+    padding: 0.25rem;
+  }
+}

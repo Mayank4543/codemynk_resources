@@ -1,1 +1,358 @@
 @import "tailwindcss";
+@import "@fontsource/caveat";
+@import "@fontsource/homemade-apple";
+@import "@fontsource/dancing-script";
+@import "@fontsource/pacifico";
+@import "@fontsource/sacramento";
+
+/* Custom styles for the editor */
+
+.editor-page {
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #8B4513;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.editor-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px solid #8B4513;
+  border-radius: 6px;
+  margin: 8px;
+  pointer-events: none;
+}
+
+.editor-page::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,8 C150,20 350,0 600,12' stroke='%238B4513' fill='none' stroke-width='1'/%3E%3C/svg%3E"),
+                    url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='2' fill='%23D35B3E'/%3E%3C/svg%3E");
+  background-position: center top, center 5px;
+  background-repeat: repeat-x;
+  background-size: 600px 20px, 20px 20px;
+  pointer-events: none;
+}
+
+.editor-pages {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.editor-page-content {
+  background: #fff;
+  border: 2px solid #8B4513;
+  border-radius: 8px;
+  padding: 20px;
+  position: relative;
+  min-height: 842px;
+  height: auto;
+  width: 100%;
+  max-width: 595px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.editor-page-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px solid #8B4513;
+  border-radius: 6px;
+  margin: 8px;
+  pointer-events: none;
+}
+
+.handwriting-background {
+  position: relative;
+  flex: 1;
+  background-color: #fff;
+  background-image: 
+    /* Red margin line */
+    linear-gradient(to right, transparent 60px, rgba(219, 112, 112, 0.2) 60px, rgba(219, 112, 112, 0.2) 61px, transparent 61px),
+    /* Horizontal lines */
+    repeating-linear-gradient(transparent 0px, transparent 39px, #DEB887 39px, #DEB887 40px);
+  background-size: 100% 40px;
+  background-attachment: local;
+  padding: 0;
+  margin-bottom: 30px;
+  width: 100%;
+  min-height: 500px;
+  height: auto;
+  overflow: visible;
+  background-position: 0 0;
+}
+
+.writing-area {
+  position: relative;
+  min-height: 100%;
+}
+
+.highlights-section {
+  background: rgba(255, 250, 240, 0.9);
+  border-left: 1px dashed #DEB887;
+  padding: 15px;
+  height: 100%;
+}
+
+.highlight-item {
+  position: relative;
+  margin-bottom: 12px;
+  padding-left: 24px;
+}
+
+.highlight-bullet {
+  position: absolute;
+  left: 0;
+  top: 4px;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8B4513;
+  cursor: pointer;
+}
+
+.bullet-star::before { content: '★'; }
+.bullet-circle::before { content: '•'; font-size: 24px; }
+.bullet-square::before { content: '▪'; font-size: 18px; }
+.bullet-box::before { content: '☐'; }
+
+.highlight-input {
+  width: 100%;
+  min-height: 24px;
+  border: none;
+  border-bottom: 1px solid transparent;
+  background: transparent;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #8B4513;
+  font-family: inherit;
+  padding: 2px 4px;
+  resize: none;
+}
+
+.highlight-input:focus {
+  outline: none;
+  border-bottom-color: #DEB887;
+}
+
+.bullet-menu {
+  position: absolute;
+  left: -5px;
+  top: 20px;
+  background: white;
+  border: 1px solid #DEB887;
+  border-radius: 4px;
+  padding: 4px;
+  display: none;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.highlight-bullet:hover .bullet-menu {
+  display: block;
+}
+
+.bullet-option {
+  padding: 2px 8px;
+  cursor: pointer;
+  color: #8B4513;
+}
+
+.bullet-option:hover {
+  background: rgba(222, 184, 135, 0.1);
+}
+
+.page-footer {
+  position: absolute;
+  bottom: 12px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 20px;
+  color: #8B4513;
+  font-size: 14px;
+  border-top: 1px solid #DEB887;
+}
+
+.handwriting-text {
+  font-size: 24px;
+  color: #8B4513;
+  font-weight: normal;
+  line-height: 40px;
+  letter-spacing: 0.3px;
+  word-spacing: 1px;
+  width: calc(100% - 40px);
+  min-height: 100%;
+  padding: 0 20px 0 80px;
+  margin-right: 0;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  resize: none;
+  background-color: transparent;
+  position: relative;
+  display: block;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  text-align: left;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-width: 100%;
+}
+
+/* Premium handwriting fonts */
+.font-homemade.handwriting-text {
+  font-family: "Homemade Apple", cursive;
+  font-size: 24px;
+  letter-spacing: 0.2px;
+  word-spacing: 1px;
+  padding-top: 15px;
+  transform: translateY(-8px);
+}
+
+.font-caveat.handwriting-text {
+  font-family: "Caveat", cursive;
+  font-size: 32px;
+  letter-spacing: 0.1px;
+  word-spacing: 1px;
+  padding-top: 8px;
+  transform: translateY(-4px);
+}
+
+.font-dancing.handwriting-text {
+  font-family: "Dancing Script", cursive;
+  font-size: 30px;
+  letter-spacing: 0.2px;
+  word-spacing: 1px;
+  padding-top: 10px;
+  transform: translateY(-6px);
+}
+
+.font-pacifico.handwriting-text {
+  font-family: "Pacifico", cursive;
+  font-size: 28px;
+  letter-spacing: 0.2px;
+  word-spacing: 1px;
+  padding-top: 12px;
+  transform: translateY(-6px);
+}
+
+.font-sacramento.handwriting-text {
+  font-family: "Sacramento", cursive;
+  font-size: 32px;
+  letter-spacing: 0.1px;
+  word-spacing: 1px;
+  padding-top: 10px;
+  transform: translateY(-5px);
+}
+
+/* Title font styles */
+.note-title-input.font-homemade { 
+  font-size: 36px !important; 
+}
+
+.note-title-input.font-caveat { 
+  font-size: 48px !important; 
+  padding-bottom: 4px !important;
+}
+
+.note-title-input.font-dancing { 
+  font-size: 44px !important; 
+}
+
+.note-title-input.font-pacifico { 
+  font-size: 40px !important; 
+}
+
+.note-title-input.font-sacramento { 
+  font-size: 48px !important; 
+}
+
+.editor-container {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 20px;
+  background: linear-gradient(45deg, #F5DEB3, #DEB887);
+  border-radius: 16px;
+  box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.1),
+    0 10px 15px -3px rgba(139, 69, 19, 0.1);
+  margin: 20px;
+  padding: 20px;
+  min-height: calc(100% - 40px);
+}
+
+.pages-container {
+  overflow-y: auto;
+}
+
+.highlights-container {
+  background: rgba(255, 250, 240, 0.9);
+  border-radius: 12px;
+  border: 1px solid #DEB887;
+  padding: 20px;
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+}
+
+.editor-shake-animation {
+  animation: shake 0.5s ease-in-out;
+}
+
+.note-title-input {
+  font-size: 40px !important;
+  color: #8B4513 !important;
+  border: none !important;
+  line-height: 1.2 !important;
+  padding: 10px 0 20px 0 !important;
+  text-shadow: 1px 1px 2px rgba(139, 69, 19, 0.1);
+  transition: all 0.3s ease;
+  opacity: 0.9;
+  margin-bottom: 20px !important;
+  position: relative;
+  z-index: 2;
+  background: transparent !important;
+}
+
+.note-title-input:focus {
+  opacity: 1;
+}
+
+.note-title-input::placeholder {
+  color: #BBAA89 !important;
+  opacity: 0.6;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  50% { transform: translateX(2px); }
+  75% { transform: translateX(-1px); }
+}
