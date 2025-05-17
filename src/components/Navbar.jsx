@@ -17,11 +17,16 @@ export default function Navbar() {
           <li className="cursor-pointer hover:text-purple-400">
             <Link to="/notes">Notes</Link>
           </li>
-          <li className="cursor-pointer hover:text-purple-400">
+           <li className="cursor-pointer hover:text-purple-400">
             <Link to="/question">Questions</Link>
-          </li>
+          </li>          
           <li className="cursor-pointer hover:text-purple-400">
             <Link to="/editor">Notes Editor</Link>
+          </li>
+          <li className="cursor-pointer ml-4">
+            <Link to="/login" className="bg-purple-700 hover:bg-purple-800 px-4 py-1 rounded-md">
+              Sign In
+            </Link>
           </li>
         </ul>
 
@@ -44,12 +49,12 @@ export default function Navbar() {
           <Link to="/" onClick={() => setIsOpen(false)}>
             Home
           </Link>
-        </li>
-        <li className="cursor-pointer hover:text-purple-400">
+        </li>        <li className="cursor-pointer hover:text-purple-400">
           <Link to="/notes" onClick={() => setIsOpen(false)}>
             Notes
           </Link>
-        </li>        <li className="cursor-pointer hover:text-purple-400">
+        </li>
+        <li className="cursor-pointer hover:text-purple-400">
           <Link to="/question" onClick={() => setIsOpen(false)}>
             Questions
           </Link>
@@ -57,6 +62,11 @@ export default function Navbar() {
         <li className="cursor-pointer hover:text-purple-400">
           <Link to="/editor" onClick={() => setIsOpen(false)}>
             Notes Editor
+          </Link>
+        </li>
+        <li className="cursor-pointer hover:text-purple-400 mt-2">
+          <Link to="/login" onClick={() => setIsOpen(false)} className="bg-purple-700 hover:bg-purple-800 px-4 py-1 rounded-md">
+            Sign In
           </Link>
         </li>
       </ul>

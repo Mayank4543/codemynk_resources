@@ -16,6 +16,13 @@ const noteSchema = new mongoose.Schema({
   wordCount: { type: Number, default: 0 },
   language: String,
   fontStyle: String,
+  // Text formatting properties
+  textAlignment: { type: String, enum: ['left', 'center', 'right', 'justify'], default: 'justify' },
+  lineSpacing: { type: Number, default: 1.5 },
+  fontSize: { type: String, enum: ['small', 'normal', 'large', 'x-large'], default: 'normal' },
+  textColor: { type: String, default: '#000000' },
+  backgroundColor: { type: String, default: '#ffffff' },
+  // Reference relationships
   createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   comments: [{

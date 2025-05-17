@@ -1,0 +1,39 @@
+@keyframes blob {
+  0% { transform: scale(1); }
+  33% { transform: scale(1.1); }
+  66% { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+.animate-blob {
+  animation: blob 7s infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+/* Custom styles for the multi-step form */
+.font-homemade {
+  font-family: 'Homemade Apple', cursive;
+}
+
+.font-dancing {
+  font-family: 'Dancing Script', cursive;
+}
+
+.font-caveat {
+  font-family: 'Caveat', cursive;
+}
+
+.font-pacifico {
+  font-family: 'Pacifico', cursive;
+}
+
+.font-sacramento {
+  font-family: 'Sacramento', cursive;
+}

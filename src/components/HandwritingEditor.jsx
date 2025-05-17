@@ -1,15 +1,11 @@
-import React, { useRef, useEffect, useCallback } from 'react';
+import React, { useRef, useEffect } from 'react';
 
 export default function HandwritingEditor({
   value,
   onChange,
   placeholder,
   fontClass,
-  readOnly = false,
-  textAlign = 'justify',
-  lineSpacing = 1.5,
-  formatText,
-  onSelectionChange
+  readOnly = false
 }) {
   const textareaRef = useRef(null);
 
@@ -28,10 +24,10 @@ export default function HandwritingEditor({
       const contentHeight = Math.max(minHeight, textarea.scrollHeight);
       textarea.style.height = `${contentHeight}px`;
 
-      // Ensure proper line height based on lineSpacing prop
-      textarea.style.lineHeight = `${40 * lineSpacing}px`;
+      // Ensure proper line height
+      textarea.style.lineHeight = '40px';
     }
-  }, [value, lineSpacing]);
+  }, [value]);
 
   const handleInput = (e) => {
     if (onChange) {
@@ -42,38 +38,6 @@ export default function HandwritingEditor({
     e.target.style.height = 'auto';
     e.target.style.height = `${e.target.scrollHeight}px`;
   };
-
-  const handleSelectionChange = useCallback(() => {
-    if (!onSelectionChange || !textareaRef.current) return;
-    
-    const textarea = textareaRef.current;
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    
-    if (start !== end) {
-      onSelectionChange({
-        start,
-        end,
-        selectedText: value.substring(start, end)
-      });
-    } else {
-      onSelectionChange(null);
-    }
-  }, [value, onSelectionChange]);
-
-  useEffect(() => {
-    const textarea = textareaRef.current;
-    if (!textarea) return;
-
-    textarea.addEventListener('mouseup', handleSelectionChange);
-    textarea.addEventListener('keyup', handleSelectionChange);
-    
-    return () => {
-      textarea.removeEventListener('mouseup', handleSelectionChange);
-      textarea.removeEventListener('keyup', handleSelectionChange);
-    };
-  }, [handleSelectionChange]);
-
   return (
     <div className="relative min-h-[500px] h-full w-full flex">
       <textarea
@@ -87,9 +51,8 @@ export default function HandwritingEditor({
           whiteSpace: 'pre-wrap',
           wordBreak: 'break-word',
           overflowY: 'hidden',
-          textAlign: textAlign,
-          textJustify: textAlign === 'justify' ? 'inter-word' : 'auto',
-          lineHeight: `${40 * lineSpacing}px`,
+          textAlign: 'justify',
+          textJustify: 'inter-word',
           paddingRight: '20px'
         }}
         readOnly={readOnly}

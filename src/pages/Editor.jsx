@@ -15,7 +15,6 @@ import {
 } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import HandwritingEditor from '../components/HandwritingEditor';
-import RichTextEditor from '../components/RichTextEditor';
 
 export default function Editor() {
   const [noteTitle, setNoteTitle] = useState('');
@@ -248,12 +247,28 @@ export default function Editor() {
               Export to PDF
             </motion.button>
           </div>
-        </div>        {/* Font and Language Selector */}
+        </div>
+
+        {/* Toolbar */}
         <div className="border-b px-6 py-2 flex items-center space-x-6">
+          <div className="flex items-center space-x-2">
+            <button className="p-2 hover:bg-gray-100 rounded"><FaBold /></button>
+            <button className="p-2 hover:bg-gray-100 rounded"><FaCode /></button>
+            <button className="p-2 hover:bg-gray-100 rounded"><FaListUl /></button>
+          </div>
+          <div className="flex items-center space-x-2">
+            <button className="p-2 hover:bg-gray-100 rounded"><FaAlignLeft /></button>
+            <button className="p-2 hover:bg-gray-100 rounded"><FaAlignCenter /></button>
+            <button className="p-2 hover:bg-gray-100 rounded"><FaAlignRight /></button>
+          </div>
+          <div className="flex items-center space-x-2">
+            <button className="p-2 hover:bg-gray-100 rounded"><FaClipboard /></button>
+            <button className="p-2 hover:bg-gray-100 rounded"><FaPalette /></button>
+            <button className="p-2 hover:bg-gray-100 rounded"><FaLink /></button>
+          </div>
           <div className="flex items-center space-x-4">
             <div className="flex items-center">
-              <FaFont className="text-gray-600 mr-2" />
-              <select
+              <FaFont className="text-gray-600 mr-2" />              <select
                 value={selectedFont}
                 onChange={(e) => setSelectedFont(e.target.value)}
                 className="border rounded-md px-3 py-1.5 text-sm bg-white shadow-sm hover:border-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
@@ -306,15 +321,14 @@ export default function Editor() {
                         <div className="absolute h-[2px] bg-amber-300 bottom-0 left-[10%] right-[10%]"></div>
                       </div>
                     </div>
-                    )}                    <div className="handwriting-background relative">
-                      <RichTextEditor
-                        value={index === pages.length - 1 ? noteContent : pageContent}
-                        onChange={handleContentChange}
-                        placeholder={index === 0 ? "Start writing your note here..." : "Continue writing..."}
-                        fontClass={`font-${selectedFont} placeholder-blue-300`}
-                        readOnly={index !== pages.length - 1}
-                        isHandwritten={true}
-                      />
+                    )}                    <div className="handwriting-background relative">                      <HandwritingEditor
+                      value={index === pages.length - 1 ? noteContent : pageContent}
+                      onChange={handleContentChange}
+                      placeholder={index === 0 ? "Start writing your note here..." : "Continue writing..."}
+                      fontClass={`font-${selectedFont} placeholder-blue-300`}
+                      readOnly={index !== pages.length - 1}
+
+                    />
                     </div>
                     <div className="page-footer">
                       <div>

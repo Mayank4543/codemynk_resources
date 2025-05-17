@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
   FaBold, 
@@ -14,15 +14,24 @@ import {
   FaIndent,
   FaOutdent,
   FaPalette,
-  FaHighlighter,
-  FaArrowsAltV
+  FaHighlighter
 } from 'react-icons/fa';
+import { formatText, changeAlignment, changeLineSpacing } from '../services/api';
 
 export default function TextFormatToolbar({ 
-  onFormatText, 
-  activeFormats = {},
-  className = ''
+  noteId,
+  onFormatApplied,
+  activeFormats = {
+    align: 'justify',
+    lineSpacing: 1.5,
+    fontSize: 'normal'
+  }
 }) {
+  const [textColor, setTextColor] = useState('#000000');
+  const [highlightColor, setHighlightColor] = useState('#FFFF00');
+  const [showTextColorPicker, setShowTextColorPicker] = useState(false);
+  const [showHighlightColorPicker, setShowHighlightColorPicker] = useState(false);
+  
   // Format buttons configuration
   const formatButtons = [
     { 
@@ -59,19 +68,65 @@ export default function TextFormatToolbar({
     }
   ];
 
-  const handleClick = (format) => {
-    if (onFormatText) {
-      onFormatText(format);
+  const handleFormat = async (format, selection) => {
+    if (!noteId) return;
+
+    try {
+      let response;
+      
+      if (format.startsWith('align-')) {
+        const alignment = format.replace('align-', '');
+        response = await changeAlignment(noteId, alignment);
+      } else if (format.startsWith('line-spacing:')) {
+        const spacing = parseFloat(format.split(':')[1]);
+        response = await changeLineSpacing(noteId, spacing);
+      } else {
+        // For text formatting like bold, italic, etc.
+        const formatData = {
+          formatType: format,
+          selection,
+          formattedText: getFormattedText(format, selection.selectedText)
+        };
+        response = await formatText(noteId, formatData);
+      }
+      
+      if (onFormatApplied) {
+        onFormatApplied(response);
+      }
+    } catch (error) {
+      console.error('Error applying format:', error);
+    }
+  };
+  
+  const getFormattedText = (format, text) => {
+    switch(format) {
+      case 'bold':
+        return `**${text}**`;
+      case 'italic':
+        return `*${text}*`;
+      case 'underline':
+        return `__${text}__`;
+      case 'strikethrough':
+        return `~~${text}~~`;
+      case 'bullet-list':
+        return text.split('\n').map(line => `• ${line}`).join('\n');
+      case 'numbered-list':
+        return text.split('\n').map((line, i) => `${i+1}. ${line}`).join('\n');
+      case 'indent':
+        return text.split('\n').map(line => `  ${line}`).join('\n');
+      case 'outdent':
+        return text.split('\n').map(line => line.replace(/^  /, '')).join('\n');
+      case 'text-color':
+        return `<color:${textColor}>${text}</color>`;
+      case 'highlight':
+        return `<highlight:${highlightColor}>${text}</highlight>`;
+      default:
+        return text;
     }
   };
 
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-      className={`flex flex-wrap items-center gap-2 p-3 bg-[#3a245e] rounded-md mb-3 ${className}`}
-    >
+    <div className="text-format-toolbar bg-[#3a245e] rounded-md p-3 mb-3 flex flex-wrap items-center gap-2">
       {formatButtons.map((section, index) => (
         <div key={section.section} className="flex items-center space-x-1">
           {section.buttons.map((button) => (
@@ -79,7 +134,7 @@ export default function TextFormatToolbar({
               key={button.format}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => handleClick(button.format)}
+              onClick={() => handleFormat(button.format)}
               className={`flex items-center gap-1 px-2 py-1 rounded-md tooltip-container 
                 ${activeFormats[button.format] ? 'bg-purple-600 text-white' : 'bg-[#2c1a4e] hover:bg-[#4a2a6e] text-white'}`}
               aria-label={button.tooltip}
@@ -98,74 +153,79 @@ export default function TextFormatToolbar({
         <div className="flex items-center space-x-2">
           <select 
             className="bg-[#2c1a4e] text-white p-1 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-purple-400"
-            onChange={(e) => handleClick(`font-size:${e.target.value}`)}
+            onChange={(e) => handleFormat(`font-size:${e.target.value}`)}
+            value={activeFormats.fontSize || 'normal'}
           >
             <option value="small">Small</option>
-            <option value="normal" selected>Normal</option>
+            <option value="normal">Normal</option>
             <option value="large">Large</option>
             <option value="x-large">X-Large</option>
           </select>
         </div>
         
         <div className="h-6 w-px bg-gray-600 mx-2"></div>
-          <div className="relative group">
+        
+        <div className="relative">
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={() => setShowTextColorPicker(!showTextColorPicker)}
             className="flex items-center gap-1 px-2 py-1 rounded-md bg-[#2c1a4e] hover:bg-[#4a2a6e] text-white tooltip-container"
             aria-label="Text Color"
           >
-            <FaPalette />
+            <FaPalette style={{ color: textColor }} />
             <span className="tooltip">Text Color</span>
           </motion.button>
           
-          <div className="absolute hidden group-hover:flex flex-wrap gap-1 p-2 bg-[#2c1a4e] rounded-md shadow-lg z-10 top-full left-0 w-32 mt-1">
-            {['#ef4444', '#f59e0b', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899', '#ffffff', '#000000'].map(color => (
-              <div
-                key={color}
-                className="w-6 h-6 rounded-full cursor-pointer hover:scale-110 transition-transform"
-                style={{ backgroundColor: color }}
-                onClick={() => handleClick(`text-color:${color}`)}
+          {showTextColorPicker && (
+            <div className="absolute top-full left-0 mt-1 p-2 bg-white rounded-md shadow-lg z-10">
+              <input 
+                type="color" 
+                value={textColor}
+                onChange={(e) => setTextColor(e.target.value)}
+                className="w-8 h-8"
               />
-            ))}
-          </div>
+            </div>
+          )}
         </div>
         
-        <div className="relative group">
+        <div className="relative">
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={() => setShowHighlightColorPicker(!showHighlightColorPicker)}
             className="flex items-center gap-1 px-2 py-1 rounded-md bg-[#2c1a4e] hover:bg-[#4a2a6e] text-white tooltip-container"
             aria-label="Highlight"
           >
-            <FaHighlighter />
+            <FaHighlighter style={{ color: highlightColor }} />
             <span className="tooltip">Highlight</span>
           </motion.button>
           
-          <div className="absolute hidden group-hover:flex flex-wrap gap-1 p-2 bg-[#2c1a4e] rounded-md shadow-lg z-10 top-full left-0 w-32 mt-1">
-            {['#fef3c7', '#dcfce7', '#dbeafe', '#f3e8ff', '#ffe4e6', '#f3f4f6'].map(color => (
-              <div
-                key={color}
-                className="w-6 h-6 rounded-full cursor-pointer hover:scale-110 transition-transform"
-                style={{ backgroundColor: color }}
-                onClick={() => handleClick(`highlight:${color}`)}
+          {showHighlightColorPicker && (
+            <div className="absolute top-full left-0 mt-1 p-2 bg-white rounded-md shadow-lg z-10">
+              <input 
+                type="color" 
+                value={highlightColor}
+                onChange={(e) => setHighlightColor(e.target.value)}
+                className="w-8 h-8"
               />
-            ))}
-          </div>
+            </div>
+          )}
         </div>
         
         <div className="h-6 w-px bg-gray-600 mx-2"></div>
         
         <select 
           className="bg-[#2c1a4e] text-white p-1 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-purple-400"
-          onChange={(e) => handleClick(`line-spacing:${e.target.value}`)}
+          onChange={(e) => handleFormat(`line-spacing:${e.target.value}`)}
+          value={activeFormats.lineSpacing || '1.5'}
         >
           <option value="1">Single</option>
-          <option value="1.5" selected>1.5</option>
+          <option value="1.5">1.5</option>
           <option value="2">Double</option>
           <option value="2.5">2.5</option>
         </select>
       </div>
-    </motion.div>
+    </div>
   );
 }

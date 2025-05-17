@@ -15,9 +15,13 @@ connectDB();
 
 // Import routes
 const noteRoutes = require('./routes/notes');
+const userRoutes = require('./routes/users');
+const formatRoutes = require('./routes/format');
 
 // Use routes
 app.use('/api/notes', noteRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/format', formatRoutes);
 
 // Basic route for testing
 app.get('/', (req, res) => {
